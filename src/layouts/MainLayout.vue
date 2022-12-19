@@ -3,8 +3,15 @@
     <q-header elevated class="bg-white text-black">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-
-        <q-toolbar-title class="text-weight-bold"> Qwitter </q-toolbar-title>
+        <q-toolbar-title class="text-weight-bold">
+          <span class="gt-sm">Qwitter</span>
+          <q-icon
+            class="header-icon q-pa-md lt-md"
+            name="fa-solid fa-dove"
+            size="sm"
+            color="primary"
+          ></q-icon>
+        </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
@@ -120,3 +127,11 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.header-icon {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+</style>
