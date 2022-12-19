@@ -29,13 +29,13 @@
         color="primary"
       ></q-icon>
       <q-list>
-        <q-item to="/" clickable v-ripple>
+        <q-item to="/" exact clickable v-ripple>
           <q-item-section avatar>
             <q-icon name="home" size="md"></q-icon>
           </q-item-section>
           <q-item-section class="text-h6 text-weight-bold">Home</q-item-section>
         </q-item>
-        <q-item to="/about" clickable v-ripple>
+        <q-item to="/about" exact clickable v-ripple>
           <q-item-section avatar>
             <q-icon name="help" size="md"></q-icon>
           </q-item-section>
