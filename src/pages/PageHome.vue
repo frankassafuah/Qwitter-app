@@ -34,7 +34,7 @@
     <q-separator class="divider" size="10px" color="grey-2" />
     <!-- tweet list -->
     <q-list separator>
-      <q-item v-for="qweet in mapQweets" :key="qweet.date">
+      <q-item v-for="qweet in mapQweets" :key="qweet.id">
         <q-item-section avatar top>
           <q-avatar size="xl">
             <img src="https://cdn.quasar.dev/img/avatar5.jpg" />
@@ -56,7 +56,14 @@
             </q-btn>
             <q-btn color="grey" size="sm" icon="far fa-heart" flat round>
             </q-btn>
-            <q-btn color="grey" size="sm" icon="fas fa-trash" flat round>
+            <q-btn
+              color="grey"
+              size="sm"
+              icon="fas fa-trash"
+              flat
+              round
+              @click="deleteQweet(qweet.id)"
+            >
             </q-btn>
           </div>
         </q-item-section>
@@ -76,11 +83,13 @@ export default {
     const newQweetContent = ref("");
     const qweets = ref([
       {
+        id: 1,
         content:
-          "Lorem ipsum dolor sit, amet consectetur adipisicing elit.Vero praesentium est commodi consequuntur dignissimos iure aliquidnesciunt repellat perferendis veniam recusandae, nulla perspiciatis.Ducimus consectetur rerum iste expedita laborum. Unde? Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate,alias! Quas laudantium exercitationem molestias? Blanditiis aut ab ratione quae dignissimos!",
+          "Hey there!! Lorem ipsum dolor sit, amet consectetur adipisicing elit.Vero praesentium est commodi consequuntur dignissimos iure aliquidnesciunt repellat perferendis veniam recusandae, nulla perspiciatis.Ducimus consectetur rerum iste expedita laborum. Unde? Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate,alias!",
         date: 1671543653717,
       },
       {
+        id: 2,
         content:
           "Lorem ipsum dolor sit, amet consectetur adipisicing elit.Vero praesentium est commodi consequuntur dignissimos iure aliquidnesciunt repellat perferendis veniam recusandae, nulla perspiciatis.Ducimus consectetur rerum iste expedita laborum. Unde? Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate,alias! Quas laudantium exercitationem molestias? Blanditiis aut ab ratione quae dignissimos!",
         date: 1671543846564,
@@ -93,6 +102,12 @@ export default {
         date: Date.now(),
       };
       qweets.value.unshift(newQweet);
+      newQweetContent.value = "";
+    };
+
+    const deleteQweet = (id) => {
+      const index = qweets.value.findIndex((item) => item.id === id);
+      qweets.value.splice(index, 1);
     };
     //computed
     const mapQweets = computed(() => {
@@ -106,6 +121,7 @@ export default {
       qweets,
       mapQweets,
       addNewQweet,
+      deleteQweet,
     };
   },
 };
