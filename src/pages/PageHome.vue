@@ -20,6 +20,7 @@
       </div>
       <div class="col col-shrink">
         <q-btn
+          @click="addNewQweet"
           class="q-mb-lg"
           unelevated
           rounded
@@ -32,8 +33,8 @@
     </div>
     <q-separator class="divider" size="10px" color="grey-2" />
     <!-- tweet list -->
-    <q-list>
-      <q-item>
+    <q-list separator>
+      <q-item v-for="qweet in mapQweets" :key="qweet.date">
         <q-item-section avatar top>
           <q-avatar size="xl">
             <img src="https://cdn.quasar.dev/img/avatar5.jpg" />
@@ -46,13 +47,7 @@
             <span class="text-grey-7">@frank_assafuah</span>
           </q-item-label>
           <q-item-label class="qweet-content text-body1">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero
-            praesentium est commodi consequuntur dignissimos iure aliquid
-            nesciunt repellat perferendis veniam recusandae, nulla perspiciatis.
-            Ducimus consectetur rerum iste expedita laborum. Unde? Lorem ipsum
-            dolor sit amet consectetur adipisicing elit. Cupiditate,alias! Quas
-            laudantium exercitationem molestias? Blanditiis aut ab ratione quae
-            dignissimos!
+            {{ qweet.content }}
           </q-item-label>
           <div class="qweet-icons row justify-between q-mt-sm">
             <q-btn color="grey" size="sm" icon="far fa-comment" flat round>
@@ -66,22 +61,51 @@
           </div>
         </q-item-section>
 
-        <q-item-section side top> 1 min ago </q-item-section>
+        <q-item-section side top> {{ qweet.date }} </q-item-section>
       </q-item>
     </q-list>
   </q-page>
 </template>
 
 <script>
-import { ref } from "vue";
-
+import { computed, ref } from "vue";
+import { formatDistance } from "date-fns";
 export default {
   name: "PageHome",
   setup() {
     const newQweetContent = ref("");
-
+    const qweets = ref([
+      {
+        content:
+          "Lorem ipsum dolor sit, amet consectetur adipisicing elit.Vero praesentium est commodi consequuntur dignissimos iure aliquidnesciunt repellat perferendis veniam recusandae, nulla perspiciatis.Ducimus consectetur rerum iste expedita laborum. Unde? Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate,alias! Quas laudantium exercitationem molestias? Blanditiis aut ab ratione quae dignissimos!",
+        date: 1671543653717,
+      },
+      {
+        content:
+          "Lorem ipsum dolor sit, amet consectetur adipisicing elit.Vero praesentium est commodi consequuntur dignissimos iure aliquidnesciunt repellat perferendis veniam recusandae, nulla perspiciatis.Ducimus consectetur rerum iste expedita laborum. Unde? Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate,alias! Quas laudantium exercitationem molestias? Blanditiis aut ab ratione quae dignissimos!",
+        date: 1671543846564,
+      },
+    ]);
+    //methods
+    const addNewQweet = () => {
+      let newQweet = {
+        content: newQweetContent.value,
+        date: Date.now(),
+      };
+      qweets.value.unshift(newQweet);
+    };
+    //computed
+    const mapQweets = computed(() => {
+      return qweets.value.map((item) => ({
+        ...item,
+        date: formatDistance(item.date, new Date()),
+      }));
+    });
     return {
       newQweetContent,
+      qweets,
+      mapQweets,
+      addNewQweet,
     };
   },
 };
